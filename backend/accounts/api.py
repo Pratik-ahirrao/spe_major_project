@@ -1,9 +1,11 @@
+import logging
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 
-# Remember api.py works just like views.py (shows the content and manages the functionality)
+logger = logging.getLogger(__name__)
+# api.py works just like views.py (shows the content and manages the functionality)
 # Creation of Token (with every new user registration a new token will be generated)
 
 # Register API Page
@@ -16,6 +18,7 @@ class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
+        logger.info('RegisterAPI called')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -33,6 +36,7 @@ class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
+        logger.info('LoginAPI called')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
@@ -53,5 +57,6 @@ class UserAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-        print(self.request)
+        logger.info('UserAPI called')
+        # print(self.request)
         return self.request.user
