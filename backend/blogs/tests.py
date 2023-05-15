@@ -1,6 +1,6 @@
 from django.test import TestCase
-from blogs.models import Post
-from django.contrib.auth.models import User
+# from blogs.models import Post
+# from django.contrib.auth.models import User
 
 # Create your tests here.
 
